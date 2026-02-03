@@ -24,6 +24,10 @@ export default {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.js$/i,
+        use: ["babel-loader"],
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
       },
