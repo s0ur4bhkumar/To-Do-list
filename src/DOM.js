@@ -1,9 +1,22 @@
-import { todoList, projectList, addProject, addToDo, Data, newTask, newProject } from "./functions.js"
+import {
+  todoList,
+  projectList,
+  addProject,
+  addToDo,
+  projectData,
+  todoData,
+  newTask,
+  newProject,
+} from "./functions.js";
 
 const monday = newTask("hell", "hella", "who knows", "least");
 
 const project = newProject("Home", "high", monday);
 
-const data = Data(project, monday)
+// console.log(project.createdBy === 'newProject')
+// console.log(monday.createdBy)
 
-console.log(data)
+const data = projectData(project);
+const todo = todoData(monday);
+console.log(data);
+console.log(todo);

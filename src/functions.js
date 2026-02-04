@@ -9,15 +9,21 @@ function addProject(title, priority, task) {
   projectList.push(title, priority, task);
 }
 
-function Data(project, todo) {
+function projectData(project) {
+  let Project;
   localStorage.setItem("project", JSON.stringify(project));
-  localStorage.setItem("todo", JSON.stringify(todo));
-  let Project = JSON.parse(localStorage.getItem("project"));
-  let Todo = JSON.parse(localStorage.getItem("todo"));
-  return {Project, Todo };
+  Project = JSON.parse(localStorage.getItem("project"));
+  return Project;
 }
 
-const newTask = (title, description, dueDate, priority) => {
+function todoData(todo) {
+  let Todo;
+  localStorage.setItem("todo", JSON.stringify(todo));
+  Todo = JSON.parse(localStorage.getItem("todo"));
+  return Todo;
+}
+
+const newTask = (title, description, dueDate, priority,destination) => {
   const task = {
     Id: crypto.randomUUID(),
     Title: title,
@@ -25,6 +31,8 @@ const newTask = (title, description, dueDate, priority) => {
     Deadline: dueDate,
     Priority: priority,
     Status: false,
+    Destination: destination,
+    createdBy: "newTask",
     toggleStatus: () => {
       if (task.Status === true) {
         task.Status = false;
@@ -42,6 +50,7 @@ const newProject = (title, priority, task) => {
     Title: title,
     Priority: priority,
     task: task,
+    createdBy: "newProject",
   };
 };
 
@@ -50,7 +59,8 @@ export {
   projectList,
   addProject,
   addToDo,
-  Data,
+  projectData,
+  todoData,
   newTask,
   newProject,
 };

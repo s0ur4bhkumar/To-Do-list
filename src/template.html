@@ -9,7 +9,122 @@
         <header>
             <h1>TO DO LIST</h1>
         </header>
-        <div class="sidebar"></div>
+        <div class="sidebar">
+            <div class="Todo-list">
+                <div class="todoHead">
+                    <h3>Todo-list</h3>
+                    <button class="todoBtn"><b>+</b></button>
+                </div>
+                <dialog class="todo-form">
+                    <form>
+                        <div class="Title">
+                            <label for="Title">Title:</label>
+                            <input type="text" name="Title" id="Title" />
+                        </div>
+                        <div class="Description">
+                            <label for="Description">Description:</label>
+                            <input
+                                type="text"
+                                name="description"
+                                id="Description"
+                            />
+                        </div>
+                        <div class="dueDate">
+                            <label for="Due-Date">Due-Date:</label>
+                            <input type="date" name="Due-Date" id="Due-Date" />
+                        </div>
+                        <div class="Priority">
+                            <fieldset>
+                                <legend>Select your priority</legend>
+                                <input
+                                    type="radio"
+                                    name="low"
+                                    id="low"
+                                    value="low"
+                                />
+                                <label for="low">Low</label>
+                                <input
+                                    type="radio"
+                                    name="moderate"
+                                    id="moderate"
+                                    value="moderate"
+                                />
+                                <label for="moderate">Moderate</label>
+                                <input
+                                    type="radio"
+                                    name="high"
+                                    id="high"
+                                    value="high"
+                                />
+                                <label for="high">High</label>
+                            </fieldset>
+                        </div>
+                        <div class="projectOptions">
+                            <span>Select project:</span>
+                            <select name="projects" id="project-list">
+                                <option value="home"> home</option>
+                            </select>
+                        </div>
+                        <div class="buttons">
+                            <button value="cancel" formmethod="dialog">
+                                cancel
+                            </button>
+                            <button value="default" id="confirm">
+                                confirm
+                            </button>
+                        </div>
+                    </form>
+                </dialog>
+            </div>
+            <div class="project">
+                <div class="projectHead">
+                    <h3>Project</h3>
+                    <button class="projectBtn"><b>+</b></button>
+                </div>
+                <dialog class="project-Dialog">
+                    <form class="project-form">
+                        <div class="Title">
+                            <label for="Title">Title:</label>
+                            <input type="text" name="Title" id="Title" />
+                        </div>
+                        <div class="Priority">
+                            <fieldset>
+                                <legend>Select your priority</legend>
+                                <input
+                                    type="radio"
+                                    name="low"
+                                    id="low"
+                                    value="low"
+                                />
+                                <label for="low">Low</label>
+                                <input
+                                    type="radio"
+                                    name="moderate"
+                                    id="moderate"
+                                    value="moderate"
+                                />
+                                <label for="moderate">Moderate</label>
+                                <input
+                                    type="radio"
+                                    name="high"
+                                    id="high"
+                                    value="high"
+                                />
+                                <label for="high">High</label>
+                            </fieldset>
+                        </div>
+                        <div class="buttons">
+                            <button value="cancel" formmethod="dialog">
+                                cancel
+                            </button>
+                            <button value="default" id="confirm">
+                                confirm
+                            </button>
+                        </div>
+                    </form>
+                </dialog>
+            </div>
+        </div>
         <div class="content"></div>
     </body>
 </html>

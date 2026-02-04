@@ -8,17 +8,128 @@ body {
     box-sizing: border-box;
 }
 
+:root {
+    --padding: 1rem;
+}
+
 body {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 1fr 8fr;
+    gap: 0.7em;
+    padding: var(--padding);
 }
 
 header {
-    grid-column: 1/4;
+    grid-column: 1/3;
     border: 1px solid red;
 }
 
 .sidebar {
     border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    gap: 40vh;
+    padding: calc(var(--padding) / 2);
+}
+
+.todoHead,
+.projectHead {
+    border: 1px solid red;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: var(--padding);
+}
+
+.content {
+    border: 1px solid red;
+}
+
+button {
+    width: 50px;
+    font-weight: 900;
+}
+
+dialog {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+form {
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+form div {
+    border: 1px solid red;
+    width: 100%;
+    padding: 0 2em 0 1em;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    display: flex;
+    gap: 1.5em;
+    padding: var(--padding);
+}
+
+fieldset > label {
+    width: fit-content;
+}
+
+.projectOptions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+}
+
+.buttons button {
+    width: 100px;
+    height: 25px;
+}
+
+/*input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: red;
+}*/
+
+input {
+    border: 1px solid red;
+    border-radius: 4px;
+    flex: 1;
+}
+
+fieldset{
+    border: 1px solid red;
+    border-radius: 12px;
+}
+
+form > div{
+    display: flex;
+}
+
+.priority{
+    display: flex;
+    justify-content: center;
 }
