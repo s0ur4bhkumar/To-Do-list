@@ -1,5 +1,5 @@
 let todoList = [];
-let projectList = [{Title:'Home'}];
+let projectList = [{ Title: "Home" }];
 
 function addToDo(title, description, duedate, priority) {
   todoList.push(newTask(title, description, duedate, priority));
@@ -17,13 +17,14 @@ function projectData(project) {
 }
 
 function todoData(todo) {
+  addToDo(todo);
   let Todo;
-  localStorage.setItem("todo", JSON.stringify(todo));
+  localStorage.setItem(`todo`, JSON.stringify(todoList));
   Todo = JSON.parse(localStorage.getItem("todo"));
   return Todo;
 }
 
-const newTask = (title, description, dueDate, priority,destination) => {
+const newTask = (title, description, dueDate, priority, destination) => {
   const task = {
     Id: crypto.randomUUID(),
     Title: title,

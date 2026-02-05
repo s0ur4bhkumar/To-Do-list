@@ -34,14 +34,20 @@ function formDataHandle(dialog) {
       Title: Title.value,
       Description: Description.value,
       Date: Date.value,
-      projectList: projectList.value,
+      Project: projectList.value,
     };
     Priority.forEach((field) => {
       if (field.checked) {
         data["Priority"] = field.value;
       }
     });
-    localStorage.setItem(`${data.Title}`, JSON.stringify(data));
+    todoData(data);
+    console.log(todoList);
+    // console.log(data)
+
+    // console.log(data);
+    // console.log(data)
+    // localStorage.setItem(`${data.Title}`, JSON.stringify(data));
     dialog.close();
   } else if (dialog.className === "project-Dialog") {
     const Title = dialog.querySelector("form #Title");
@@ -53,6 +59,17 @@ function formDataHandle(dialog) {
       }
     });
     // console.log(data);
+  }
+}
+
+function addToContainer(dialog) {
+  const div = document.createElement("div");
+  if (dialog.className === "todo-dialog") {
+    div.textContent = "this is task";
+    tasks.append(div);
+  } else if (dialog.className === "project-Dialog") {
+    div.textContent = "this is project";
+    projectContainer.append(div);
   }
 }
 
@@ -78,23 +95,11 @@ buttons.forEach((btn) => {
 
 myDialog.forEach((dialog) =>
   dialog.addEventListener("close", (e) => {
-    console.log(dialog.className);
-    const div = document.createElement("div");
-    if (dialog.className === "todo-dialog") {
-      div.textContent = "this is task";
-      tasks.append(div);
-    } else if (dialog.className === "project-Dialog") {
-      console.log("hello");
-      div.textContent = "this is project";
-      projectContainer.append(div);
-    }
+    addToContainer(dialog);
   }),
 );
 
-// confirmBtn.forEach((btn) => {
-//   btn.addEventListener("click", (e) => {
-//     e.preventDefault();
-//     console.log("hello");
-//     console.log(formBtnHandler(e));
-//   });
-// });
+// const task = newTask('testing', 'just testing', 'none', 'none', 'none')
+// // console.log(localStorage)
+// const Task = todoData(task)
+// console.log(Task)
