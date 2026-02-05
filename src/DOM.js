@@ -17,6 +17,7 @@ function formBtnHandler(e) {
     const dialog = e.target.closest("dialog");
     const form = dialog.querySelector("form");
     formDataHandle(dialog);
+    dialog.returnValue = 'confirm'
     dialog.close();
     form.reset();
   }
@@ -68,13 +69,16 @@ function formDataHandle(dialog) {
 }
 
 function addToContainer(dialog) {
+  console.log(dialog.returnValue)
   const div = document.createElement("div");
-  if (dialog.className === "todo-dialog") {
-    div.textContent = "this is task";
-    tasks.append(div);
-  } else if (dialog.className === "project-Dialog") {
-    div.textContent = "this is project";
-    projectContainer.append(div);
+  if (dialog.returnValue !== "cancel") {
+    if (dialog.className === "todo-dialog") {
+      div.textContent = "this is task";
+      tasks.append(div);
+    } else if (dialog.className === "project-Dialog") {
+      div.textContent = "this is project";
+      projectContainer.append(div);
+    }
   }
 }
 
