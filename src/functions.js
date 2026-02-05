@@ -1,5 +1,5 @@
 let todoList = [];
-let projectList = [];
+let projectList = [{Title:'Home'}];
 
 function addToDo(title, description, duedate, priority) {
   todoList.push(newTask(title, description, duedate, priority));

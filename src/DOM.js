@@ -9,14 +9,92 @@ import {
   newProject,
 } from "./functions.js";
 
-const monday = newTask("hell", "hella", "who knows", "least");
+// ***********************************************DOM helper functions****************************************
 
-const project = newProject("Home", "high", monday);
+function formBtnHandler(e) {
+  if (e.target.className === "todoBtn" || e.target.className === "projectBtn") {
+    e.target.closest("div").nextElementSibling.showModal();
+  } else if (e.target.className === "confirm") {
+    e.preventDefault();
+    const dialog = e.target.closest("dialog");
+    formDataHandle(dialog);
+    dialog.close();
+  }
+}
 
-// console.log(project.createdBy === 'newProject')
-// console.log(monday.createdBy)
+function formDataHandle(dialog) {
+  let data = {};
+  if (dialog.className === "todo-dialog") {
+    const Title = dialog.querySelector("#Title");
+    const Description = dialog.querySelector("#Description");
+    const Date = dialog.querySelector("#Due-Date");
+    const projectList = dialog.querySelector("#project-list");
+    const Priority = dialog.querySelectorAll(`input[type = 'radio']`);
+    data = {
+      Title: Title.value,
+      Description: Description.value,
+      Date: Date.value,
+      projectList: projectList.value,
+    };
+    Priority.forEach((field) => {
+      if (field.checked) {
+        data["Priority"] = field.value;
+      }
+    });
+    localStorage.setItem(`${data.Title}`, JSON.stringify(data));
+    dialog.close();
+  } else if (dialog.className === "project-Dialog") {
+    const Title = dialog.querySelector("form #Title");
+    const Priority = dialog.querySelectorAll(`input[type = 'radio']`);
+    data = { Title: Title.value };
+    Priority.forEach((field) => {
+      if (field.checked) {
+        data["Priority"] = field.value;
+      }
+    });
+    // console.log(data);
+  }
+}
 
-const data = projectData(project);
-const todo = todoData(monday);
-console.log(data);
-console.log(todo);
+// *********************************************DOM manipulation*********************************************
+
+const container = document.querySelector(".content");
+const myDialog = document.querySelectorAll("dialog");
+const projectDialog = document.querySelector(".project-form");
+const tasks = document.querySelector(".Todo-list");
+const projectContainer = document.querySelector(".Project-list");
+const buttons = document.querySelectorAll("button");
+const projects = projectList;
+buttons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    formBtnHandler(e);
+    // console.log(todoList);
+    // console.log(projectList)
+    // const dialog = e.target.closest('dialog')
+    // console.log(dialog)
+    // console.log(dialog.returnValue)
+  });
+});
+
+myDialog.forEach((dialog) =>
+  dialog.addEventListener("close", (e) => {
+    console.log(dialog.className);
+    const div = document.createElement("div");
+    if (dialog.className === "todo-dialog") {
+      div.textContent = "this is task";
+      tasks.append(div);
+    } else if (dialog.className === "project-Dialog") {
+      console.log("hello");
+      div.textContent = "this is project";
+      projectContainer.append(div);
+    }
+  }),
+);
+
+// confirmBtn.forEach((btn) => {
+//   btn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     console.log("hello");
+//     console.log(formBtnHandler(e));
+//   });
+// });
