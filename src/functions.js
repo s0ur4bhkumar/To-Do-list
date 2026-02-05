@@ -1,38 +1,58 @@
 let todoList = [];
 let projectList = [{ Title: "Home" }];
 
-function addToDo(title, description, duedate, priority) {
-  todoList.push(newTask(title, description, duedate, priority));
+function addToDo(data) {
+  const task = newTask(
+    data.Title,
+    data.Description,
+    data.Date,
+    data.Priority,
+    data.Project,
+  );
+  todoList.push(task);
 }
 
-function addProject(title, priority, task) {
-  projectList.push(title, priority, task);
+function addProject(data) {
+  projectList.push(newProject(data.Title, data.Priority));
 }
 
-function projectData(project) {
-  let Project;
-  localStorage.setItem("project", JSON.stringify(project));
-  Project = JSON.parse(localStorage.getItem("project"));
-  return Project;
+function addTaskToHome() {
+  if (todoList) {
+    todoList.forEach((task) => {
+      projectList[0][task.Title] = task;
+    });
+  }
+}
+
+function projectData(data) {
+  const project = newProject(data.Title, data.Priority);
+  addProject(project);
+  localStorage.setItem("project", JSON.stringify(projectList));
 }
 
 function todoData(todo) {
   addToDo(todo);
-  let Todo;
   localStorage.setItem(`todo`, JSON.stringify(todoList));
-  Todo = JSON.parse(localStorage.getItem("todo"));
-  return Todo;
 }
 
-const newTask = (title, description, dueDate, priority, destination) => {
+function addTaskToProject(task, projectName) {
+  projectList.forEach((project) => {
+    console.log(projectName, project.Title);
+    if (project.Title === projectName) {
+      project.Task.push(task);
+    }
+  });
+}
+
+const newTask = (title, description, Date, priority, project) => {
   const task = {
-    Id: crypto.randomUUID(),
     Title: title,
+    Id: crypto.randomUUID(),
     Description: description,
-    Deadline: dueDate,
+    Deadline: Date,
     Priority: priority,
     Status: false,
-    Destination: destination,
+    Destination: project,
     createdBy: "newTask",
     toggleStatus: () => {
       if (task.Status === true) {
@@ -45,12 +65,12 @@ const newTask = (title, description, dueDate, priority, destination) => {
   return task;
 };
 
-const newProject = (title, priority, task) => {
+const newProject = (title, priority) => {
   return {
     ID: crypto.randomUUID(),
     Title: title,
     Priority: priority,
-    task: task,
+    Task: [],
     createdBy: "newProject",
   };
 };
@@ -64,4 +84,6 @@ export {
   todoData,
   newTask,
   newProject,
+  addTaskToHome,
+  addTaskToProject,
 };

@@ -1,12 +1,10 @@
 import {
   todoList,
   projectList,
-  addProject,
-  addToDo,
   projectData,
   todoData,
-  newTask,
-  newProject,
+  addTaskToHome,
+  addTaskToProject,
 } from "./functions.js";
 
 // ***********************************************DOM helper functions****************************************
@@ -41,8 +39,11 @@ function formDataHandle(dialog) {
         data["Priority"] = field.value;
       }
     });
+    if (projectList.value !== "Home") {
+      addTaskToProject(data, projectList.value);
+    }
     todoData(data);
-    console.log(todoList);
+    addTaskToHome();
     // console.log(data)
 
     // console.log(data);
@@ -58,6 +59,8 @@ function formDataHandle(dialog) {
         data["Priority"] = field.value;
       }
     });
+    newProjectOption(Title.value, Title.value);
+    projectData(data);
     // console.log(data);
   }
 }
@@ -73,6 +76,12 @@ function addToContainer(dialog) {
   }
 }
 
+function newProjectOption(title, value) {
+  const selection = document.getElementById("project-list");
+  const option = new Option(title, value);
+  selection.add(option);
+}
+
 // *********************************************DOM manipulation*********************************************
 
 const container = document.querySelector(".content");
@@ -82,6 +91,7 @@ const tasks = document.querySelector(".Todo-list");
 const projectContainer = document.querySelector(".Project-list");
 const buttons = document.querySelectorAll("button");
 const projects = projectList;
+const taskList = todoList;
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     formBtnHandler(e);
@@ -96,9 +106,13 @@ buttons.forEach((btn) => {
 myDialog.forEach((dialog) =>
   dialog.addEventListener("close", (e) => {
     addToContainer(dialog);
+    console.log("projects: ", projects);
+    console.log("tasks: ", taskList);
   }),
 );
 
+// console.log(projects)
+// console.log(todoList)
 // const task = newTask('testing', 'just testing', 'none', 'none', 'none')
 // // console.log(localStorage)
 // const Task = todoData(task)
