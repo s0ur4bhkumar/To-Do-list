@@ -17,10 +17,12 @@ function addProject(data) {
 }
 
 function addTaskToHome() {
-  if (todoList) {
+  if (todoList.length !== 0) {
+    console.log("task to home executed");
     todoList.forEach((task) => {
       projectList[0][task.Title] = task;
     });
+    localStorage.setItem("project", JSON.stringify(projectList));
   }
 }
 

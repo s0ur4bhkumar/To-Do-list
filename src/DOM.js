@@ -15,8 +15,10 @@ function formBtnHandler(e) {
   } else if (e.target.className === "confirm") {
     e.preventDefault();
     const dialog = e.target.closest("dialog");
+    const form = dialog.querySelector("form");
     formDataHandle(dialog);
     dialog.close();
+    form.reset();
   }
 }
 
@@ -39,17 +41,17 @@ function formDataHandle(dialog) {
         data["Priority"] = field.value;
       }
     });
+    todoData(data);
     if (projectList.value !== "Home") {
       addTaskToProject(data, projectList.value);
     }
-    todoData(data);
-    addTaskToHome();
     // console.log(data)
 
     // console.log(data);
     // console.log(data)
     // localStorage.setItem(`${data.Title}`, JSON.stringify(data));
     dialog.close();
+    addTaskToHome();
   } else if (dialog.className === "project-Dialog") {
     const Title = dialog.querySelector("form #Title");
     const Priority = dialog.querySelectorAll(`input[type = 'radio']`);
