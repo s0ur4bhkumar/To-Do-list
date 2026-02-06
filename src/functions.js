@@ -18,7 +18,6 @@ function addProject(data) {
 
 function addTaskToHome() {
   if (todoList.length !== 0) {
-    console.log("task to home executed");
     todoList.forEach((task) => {
       projectList[0][task.Title] = task;
     });
@@ -39,7 +38,6 @@ function todoData(todo) {
 
 function addTaskToProject(task, projectName) {
   projectList.forEach((project) => {
-    console.log(projectName, project.Title);
     if (project.Title === projectName) {
       project.Task.push(task);
     }
@@ -69,7 +67,7 @@ const newTask = (title, description, Date, priority, project) => {
 
 const newProject = (title, priority) => {
   return {
-    ID: crypto.randomUUID(),
+    Id: crypto.randomUUID(),
     Title: title,
     Priority: priority,
     Task: [],

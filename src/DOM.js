@@ -16,8 +16,9 @@ function formBtnHandler(e) {
     e.preventDefault();
     const dialog = e.target.closest("dialog");
     const form = dialog.querySelector("form");
+    const Name = form.querySelector("#Title");
     formDataHandle(dialog);
-    dialog.returnValue = 'confirm'
+    dialog.returnValue = Name.value;
     dialog.close();
     form.reset();
   }
@@ -46,12 +47,6 @@ function formDataHandle(dialog) {
     if (projectList.value !== "Home") {
       addTaskToProject(data, projectList.value);
     }
-    // console.log(data)
-
-    // console.log(data);
-    // console.log(data)
-    // localStorage.setItem(`${data.Title}`, JSON.stringify(data));
-    dialog.close();
     addTaskToHome();
   } else if (dialog.className === "project-Dialog") {
     const Title = dialog.querySelector("form #Title");
@@ -64,19 +59,26 @@ function formDataHandle(dialog) {
     });
     newProjectOption(Title.value, Title.value);
     projectData(data);
-    // console.log(data);
   }
 }
 
 function addToContainer(dialog) {
-  console.log(dialog.returnValue)
   const div = document.createElement("div");
+  const p = document.createElement("p");
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "-";
+  div.append(p);
   if (dialog.returnValue !== "cancel") {
     if (dialog.className === "todo-dialog") {
-      div.textContent = "this is task";
+      div.classList.add("task");
+      div.append(delBtn);
+      p.textContent = dialog.returnValue;
       tasks.append(div);
+      return div;
     } else if (dialog.className === "project-Dialog") {
-      div.textContent = "this is project";
+      div.classList.add("project");
+      div.append(delBtn);
+      p.textContent = dialog.returnValue;
       projectContainer.append(div);
     }
   }
@@ -86,6 +88,48 @@ function newProjectOption(title, value) {
   const selection = document.getElementById("project-list");
   const option = new Option(title, value);
   selection.add(option);
+}
+
+function template(objlist, title) {
+  const Card = document.createElement("div");
+  const btnContainer = document.createElement("div");
+  const doneBtn = document.createElement("button");
+  const delBtn = document.createElement("button");
+  btnContainer.classList.add("cardBtnContainer");
+  btnContainer.append(doneBtn, delBtn);
+  doneBtn.textContent = "Done";
+  delBtn.textContent = "Delete";
+  objlist.forEach((obj) => {
+    if (obj.Title === title) {
+      Card.classList.add(`taskCard`, `${obj.Title}`);
+      for (const [key, value] of Object.entries(obj)) {
+        if ((key !== "Id" && key !== "createdBy") || key !== "task") {
+          const detail = document.createElement("p");
+          detail.textContent = `${key}: ${value}`;
+          Card.append(detail);
+        }
+      }
+      Card.append(btnContainer);
+      container.append(Card);
+    }
+  });
+}
+
+function addToContent(e) {
+  container.innerHTML = "";
+  // console.log('add: ', e.target.className)
+  let todoList;
+  if (e.target.className === "project") {
+    console.log("yup");
+    todoList = JSON.parse(localStorage.getItem("project"));
+  } else {
+    todoList = JSON.parse(localStorage.getItem("todo"));
+  }
+  console.log(todoList);
+  const Title = e.target.querySelector("p").textContent;
+  template(todoList, Title);
+  // container.textContent = `hello: brother`;
+  e.target.classList.add(`${Title}`);
 }
 
 // *********************************************DOM manipulation*********************************************
@@ -98,28 +142,28 @@ const projectContainer = document.querySelector(".Project-list");
 const buttons = document.querySelectorAll("button");
 const projects = projectList;
 const taskList = todoList;
+
+tasks.addEventListener("click", (e) => {
+  if (e.target.className === "task") {
+    console.log(e.target);
+    addToContent(e);
+  }
+});
+
+projectContainer.addEventListener("click", (e) => {
+  if (e.target.className === "project") {
+    addToContent(e);
+  }
+});
+
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     formBtnHandler(e);
-    // console.log(todoList);
-    // console.log(projectList)
-    // const dialog = e.target.closest('dialog')
-    // console.log(dialog)
-    // console.log(dialog.returnValue)
   });
 });
 
 myDialog.forEach((dialog) =>
   dialog.addEventListener("close", (e) => {
     addToContainer(dialog);
-    console.log("projects: ", projects);
-    console.log("tasks: ", taskList);
   }),
 );
-
-// console.log(projects)
-// console.log(todoList)
-// const task = newTask('testing', 'just testing', 'none', 'none', 'none')
-// // console.log(localStorage)
-// const Task = todoData(task)
-// console.log(Task)
