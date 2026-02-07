@@ -152,22 +152,37 @@ function Home() {
 }
 
 function projectDisplay(objlist, title) {
-  const container = document.querySelector('.content');
-  objlist.forEach(obj => {
-    if (obj.Title !== 'Home') {
-      // const card = document.createElement("div");
-      // const btnContainer = document.createElement("div");
-      // const doneBtn = document.createElement("button");
-      // const delBtn = document.createElement("button");
-      // doneBtn.textContent = "Done";
-      // delBtn.textContent = "Delete";
-      // doneBtn.classList.add("doneBtn");
-      // delBtn.classList.add("delBtn");
-      // btnContainer.append(doneBtn, delBtn);
-      // card.classList.add("homeCard");
-      return obj
+  const container = document.querySelector(".content");
+  container.innerHTML = "";
+  objlist.forEach((obj) => {
+    if (obj.Title !== "Home") {
+      // container.textContent = obj['Task'];
+      obj["Task"].forEach((ele) => {
+        if (ele.Project === title) {
+          console.log("the obj: ", ele);
+          console.log(ele.Project, title);
+          const card = document.createElement("div");
+          const btnContainer = document.createElement("div");
+          const doneBtn = document.createElement("button");
+          const delBtn = document.createElement("button");
+          doneBtn.textContent = "Done";
+          delBtn.textContent = "Delete";
+          doneBtn.classList.add("doneBtn");
+          delBtn.classList.add("delBtn");
+          btnContainer.append(doneBtn, delBtn);
+          card.classList.add("homeCard");
+          for (const [key, value] of Object.entries(ele)) {
+            console.log(key, value);
+            const p = document.createElement("p");
+            p.textContent = `${key}: ${value}`;
+            card.append(p);
+          }
+          card.append(btnContainer);
+          container.append(card);
+        }
+      });
     }
-  })
+  });
 }
 
 function addHome() {
@@ -189,15 +204,15 @@ function addToContent(e) {
   if (e.target.classList.contains("project")) {
     List = JSON.parse(localStorage.getItem("project"));
     Title = e.target.querySelector("p").textContent;
-    console.log('for project display: ',projectDisplay(List,Title))
+    projectDisplay(List, Title);
     e.target.classList.add(`${Title}`);
   } else {
     List = JSON.parse(localStorage.getItem("todo"));
     Title = e.target.querySelector("p").textContent;
     e.target.classList.add(`${Title}`);
+    template(List, Title);
   }
   console.log(List);
-  template(List, Title);
   // container.textContent = `hello: brother`;
 }
 
