@@ -75,6 +75,50 @@ const newProject = (title, priority) => {
   };
 };
 
+function checkTitles(name) {
+  const combineList = [...todoList, ...projectList];
+  const titles = combineList.map((obj) => obj.Title);
+  if (titles.includes(name)) {
+    alert("please use a different title");
+    return true;
+  }
+}
+
+function delFromlocalStorageAndMainArray(main, ele) {
+  if (main === "project") {
+    projectList.forEach((project) => {
+      if (project.Title === ele) {
+        projectList = projectList.filter((project) => project.Title != ele);
+        localStorage.setItem("project", JSON.stringify(projectList));
+      }
+    });
+  } else if ((main = "task")) {
+    todoList.forEach((task) => {
+      if (task.Title === ele) {
+        todoList = todoList.filter((task) => task.Title != ele);
+        localStorage.setItem("todo", JSON.stringify(todoList));
+      }
+    });
+    projectList.forEach((project) => {
+      if (project.Title === "Home") {
+        Object.keys(project).forEach((prop) => {
+          if (`${prop}` === ele) {
+            delete project[prop];
+          }
+          localStorage.setItem("project", JSON.stringify(projectList));
+        });
+      } else {
+        project.Task.forEach((obj) => {
+          if (obj.Title === ele) {
+            project.Task.splice(project.Task.indexOf(obj), 1);
+            localStorage.setItem("project", JSON.stringify(projectList));
+          }
+        });
+      }
+    });
+  }
+}
+
 export {
   todoList,
   projectList,
@@ -86,4 +130,6 @@ export {
   newProject,
   addTaskToHome,
   addTaskToProject,
+  checkTitles,
+  delFromlocalStorageAndMainArray,
 };

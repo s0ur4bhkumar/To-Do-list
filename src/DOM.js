@@ -5,6 +5,8 @@ import {
   todoData,
   addTaskToHome,
   addTaskToProject,
+  checkTitles,
+  delFromlocalStorageAndMainArray,
 } from "./functions.js";
 
 // ***********************************************DOM helper functions****************************************
@@ -17,10 +19,14 @@ function formBtnHandler(e) {
     const dialog = e.target.closest("dialog");
     const form = dialog.querySelector("form");
     const Name = form.querySelector("#Title");
-    formDataHandle(dialog);
-    dialog.returnValue = Name.value;
-    dialog.close();
-    form.reset();
+    if (!checkTitles(Name.value)) {
+      formDataHandle(dialog);
+      dialog.returnValue = Name.value;
+      dialog.close();
+      form.reset();
+      console.log('todolist before delete function', todoList)
+      console.log(('projectlist before delete function',projectList))
+    }
   }
 }
 
@@ -73,7 +79,7 @@ function addToContainer(dialog) {
   doneBtn.classList.add("doneBtn");
   delBtn.classList.add("delBtn");
   btnContainer.append(doneBtn, delBtn);
-  del(delBtn)
+  del(delBtn);
   div.append(p);
   if (dialog.returnValue !== "cancel") {
     if (dialog.className === "todo-dialog") {
@@ -114,7 +120,7 @@ function template(objlist, title) {
         `${obj.Title.trim().replace(/\s+/g, "-").toLowerCase()}`,
       );
       for (const [key, value] of Object.entries(obj)) {
-        if ((key !== "Id" && key !== "createdBy") || key !== "task") {
+        if (key !== "Id" && key !== "createdBy") {
           const detail = document.createElement("p");
           detail.textContent = `${key}: ${value}`;
           Card.append(detail);
@@ -146,7 +152,7 @@ function Home() {
             delBtn.classList.add("delBtn");
             btnContainer.append(doneBtn, delBtn);
             card.classList.add("homeCard");
-            del(delBtn)
+            del(delBtn);
             for (const [key, value] of Object.entries(val)) {
               if (key !== "Id" && key !== "createdBy") {
                 const p = document.createElement("p");
@@ -182,7 +188,7 @@ function projectDisplay(objlist, title) {
           delBtn.classList.add("delBtn");
           btnContainer.append(doneBtn, delBtn);
           card.classList.add("homeCard");
-          del(delBtn)
+          del(delBtn);
           for (const [key, value] of Object.entries(ele)) {
             console.log(key, value);
             const p = document.createElement("p");
@@ -226,15 +232,17 @@ function addToContent(e) {
     e.target.classList.add(`${className}`);
     template(List, Title);
   }
-  console.log(List);
+  // console.log(List);
   // container.textContent = `hello: brother`;
 }
 
 function del(button) {
-  button.addEventListener('click', (e) => {
-    const ele = e.target.closest('div').parentNode
-    ele.remove()
-  })
+  button.addEventListener("click", (e) => {
+    const container = e.target.closest("div").parentNode;
+    const obj = container.querySelector("p").textContent
+    container.remove();
+    delFromlocalStorageAndMainArray(container.className, obj)
+  });
 }
 
 // *********************************************DOM manipulation*********************************************
