@@ -65,19 +65,26 @@ function formDataHandle(dialog) {
 function addToContainer(dialog) {
   const div = document.createElement("div");
   const p = document.createElement("p");
+  const btnContainer = document.createElement("div");
+  const doneBtn = document.createElement("button");
   const delBtn = document.createElement("button");
-  delBtn.textContent = "-";
+  doneBtn.textContent = "Done";
+  delBtn.textContent = "Delete";
+  doneBtn.classList.add("doneBtn");
+  delBtn.classList.add("delBtn");
+  btnContainer.append(doneBtn, delBtn);
+  del(delBtn)
   div.append(p);
   if (dialog.returnValue !== "cancel") {
     if (dialog.className === "todo-dialog") {
       div.classList.add("task");
-      div.append(delBtn);
+      div.append(btnContainer);
       p.textContent = dialog.returnValue;
       tasks.append(div);
       return div;
     } else if (dialog.className === "project-Dialog") {
       div.classList.add("project");
-      div.append(delBtn);
+      div.append(btnContainer);
       p.textContent = dialog.returnValue;
       projectContainer.append(div);
     }
@@ -102,7 +109,10 @@ function template(objlist, title) {
   delBtn.textContent = "Delete";
   objlist.forEach((obj) => {
     if (obj.Title === title) {
-      Card.classList.add(`taskCard`, `${obj.Title}`);
+      Card.classList.add(
+        `taskCard`,
+        `${obj.Title.trim().replace(/\s+/g, "-").toLowerCase()}`,
+      );
       for (const [key, value] of Object.entries(obj)) {
         if ((key !== "Id" && key !== "createdBy") || key !== "task") {
           const detail = document.createElement("p");
@@ -136,6 +146,7 @@ function Home() {
             delBtn.classList.add("delBtn");
             btnContainer.append(doneBtn, delBtn);
             card.classList.add("homeCard");
+            del(delBtn)
             for (const [key, value] of Object.entries(val)) {
               if (key !== "Id" && key !== "createdBy") {
                 const p = document.createElement("p");
@@ -171,6 +182,7 @@ function projectDisplay(objlist, title) {
           delBtn.classList.add("delBtn");
           btnContainer.append(doneBtn, delBtn);
           card.classList.add("homeCard");
+          del(delBtn)
           for (const [key, value] of Object.entries(ele)) {
             console.log(key, value);
             const p = document.createElement("p");
@@ -204,16 +216,25 @@ function addToContent(e) {
   if (e.target.classList.contains("project")) {
     List = JSON.parse(localStorage.getItem("project"));
     Title = e.target.querySelector("p").textContent;
+    const className = Title.trim().replace(/\s+/g, "-").toLowerCase();
     projectDisplay(List, Title);
-    e.target.classList.add(`${Title}`);
+    e.target.classList.add(`${className}`);
   } else {
     List = JSON.parse(localStorage.getItem("todo"));
-    Title = e.target.querySelector("p").textContent;
-    e.target.classList.add(`${Title}`);
+    const Title = e.target.querySelector("p").textContent;
+    const className = Title.trim().replace(/\s+/g, "-").toLowerCase();
+    e.target.classList.add(`${className}`);
     template(List, Title);
   }
   console.log(List);
   // container.textContent = `hello: brother`;
+}
+
+function del(button) {
+  button.addEventListener('click', (e) => {
+    const ele = e.target.closest('div').parentNode
+    ele.remove()
+  })
 }
 
 // *********************************************DOM manipulation*********************************************
@@ -229,7 +250,6 @@ const taskList = todoList;
 
 tasks.addEventListener("click", (e) => {
   if (e.target.classList.contains("task")) {
-    // console.log(e.target);
     addToContent(e);
   }
 });

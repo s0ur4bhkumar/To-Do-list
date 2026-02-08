@@ -52,7 +52,7 @@ const newTask = (title, description, Date, priority, project) => {
     Deadline: Date,
     Priority: priority,
     Status: false,
-    Destination: project,
+    Project: project,
     createdBy: "newTask",
     toggleStatus: () => {
       if (task.Status === true) {
