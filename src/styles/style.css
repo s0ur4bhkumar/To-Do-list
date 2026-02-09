@@ -51,7 +51,7 @@ button {
     font-weight: 900;
 }
 
-dialog {
+dialog:open {
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -123,13 +123,63 @@ input {
 fieldset{
     border: 1px solid red;
     border-radius: 12px;
+    flex: 1;
 }
 
 form > div{
     display: flex;
 }
 
-.priority{
+.Priority{
     display: flex;
     justify-content: center;
+    padding: 0 2em 0 1em;
 }
+
+input[name='priority']{
+    border: 1px solid red;
+}
+
+.task, .project{
+    background-color: blue;
+    height: 40px;
+    width: 100%;   
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.project{
+    background-color: lightgray;
+}
+
+.Todo-list, .Project-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.taskCard{
+    background-color: red;
+}
+.content{
+    display: grid;
+    gap: 12px;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    grid-template-rows: repeat(auto-fill, minmax(200px,1fr));
+    padding: 2em;
+}
+
+.homeCard{
+    height: 200px;
+    /*width: 150px;*/
+    background-color: slategray;
+}
+
+.Home{
+    background-color: yellow;
+    height: 50px;  
+    padding: 15px;
+}
+

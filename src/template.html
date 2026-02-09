@@ -13,10 +13,10 @@
             <div class="Todo-list">
                 <div class="todoHead">
                     <h3>Todo-list</h3>
-                    <button class="todoBtn"><b>+</b></button>
+                    <button class="todoBtn">+</button>
                 </div>
-                <dialog class="todo-form">
-                    <form>
+                <dialog class="todo-dialog">
+                    <form class="todo-form">
                         <div class="Title">
                             <label for="Title">Title:</label>
                             <input type="text" name="Title" id="Title" />
@@ -38,21 +38,21 @@
                                 <legend>Select your priority</legend>
                                 <input
                                     type="radio"
-                                    name="low"
+                                    name="Priority"
                                     id="low"
                                     value="low"
                                 />
                                 <label for="low">Low</label>
                                 <input
                                     type="radio"
-                                    name="moderate"
+                                    name="Priority"
                                     id="moderate"
                                     value="moderate"
                                 />
                                 <label for="moderate">Moderate</label>
                                 <input
                                     type="radio"
-                                    name="high"
+                                    name="Priority"
                                     id="high"
                                     value="high"
                                 />
@@ -62,24 +62,32 @@
                         <div class="projectOptions">
                             <span>Select project:</span>
                             <select name="projects" id="project-list">
-                                <option value="home"> home</option>
+                                <option value="home">Home</option>
                             </select>
                         </div>
                         <div class="buttons">
-                            <button value="cancel" formmethod="dialog">
+                            <button
+                                value="cancel"
+                                formmethod="dialog"
+                                class="cancel"
+                            >
                                 cancel
                             </button>
-                            <button value="default" id="confirm">
+                            <button
+                                type="submit"
+                                value="default"
+                                class="confirm"
+                            >
                                 confirm
                             </button>
                         </div>
                     </form>
                 </dialog>
             </div>
-            <div class="project">
+            <div class="Project-list">
                 <div class="projectHead">
                     <h3>Project</h3>
-                    <button class="projectBtn"><b>+</b></button>
+                    <button class="projectBtn">+</button>
                 </div>
                 <dialog class="project-Dialog">
                     <form class="project-form">
@@ -92,21 +100,21 @@
                                 <legend>Select your priority</legend>
                                 <input
                                     type="radio"
-                                    name="low"
+                                    name="Priority"
                                     id="low"
                                     value="low"
                                 />
                                 <label for="low">Low</label>
                                 <input
                                     type="radio"
-                                    name="moderate"
+                                    name="Priority"
                                     id="moderate"
                                     value="moderate"
                                 />
                                 <label for="moderate">Moderate</label>
                                 <input
                                     type="radio"
-                                    name="high"
+                                    name="priority"
                                     id="high"
                                     value="high"
                                 />
@@ -114,10 +122,14 @@
                             </fieldset>
                         </div>
                         <div class="buttons">
-                            <button value="cancel" formmethod="dialog">
+                            <button
+                                value="cancel"
+                                formmethod="dialog"
+                                class="cancel"
+                            >
                                 cancel
                             </button>
-                            <button value="default" id="confirm">
+                            <button value="default" class="confirm">
                                 confirm
                             </button>
                         </div>
