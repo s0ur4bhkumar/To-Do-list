@@ -82,9 +82,18 @@ form {
 }
 
 form div {
-    border: 1px solid red;
     width: 100%;
     padding: 0 2em 0 1em;
+}
+
+dialog{
+    border-radius: var(--radius);
+    background-color: var(--bg-Color);
+}
+
+::backdrop{
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 label {
@@ -129,13 +138,13 @@ fieldset > label {
 }*/
 
 input {
-    border: 1px solid red;
+    border: 1px solid lightblue;
     border-radius: 4px;
     flex: 1;
 }
 
 fieldset {
-    border: 1px solid red;
+    border: 1px solid lightblue;
     border-radius: 12px;
     flex: 1;
 }
@@ -151,7 +160,7 @@ form > div {
 }
 
 input[name="priority"] {
-    border: 1px solid red;
+    border: 1px solid lightblue;
 }
 
 .task,
