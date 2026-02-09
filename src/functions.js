@@ -88,7 +88,7 @@ function delFromlocalStorageAndMainArray(main, ele) {
   if (main === "project") {
     projectList.forEach((project) => {
       if (project.Title === ele) {
-        projectList = projectList.filter((project) => project.Title != ele);
+        projectList.splice(projectList.indexOf(project),1);
         localStorage.setItem("project", JSON.stringify(projectList));
       }
     });
@@ -96,6 +96,7 @@ function delFromlocalStorageAndMainArray(main, ele) {
     todoList.forEach((task) => {
       if (task.Title === ele) {
         todoList = todoList.filter((task) => task.Title != ele);
+        localStorage.clear()
         localStorage.setItem("todo", JSON.stringify(todoList));
       }
     });
@@ -111,6 +112,7 @@ function delFromlocalStorageAndMainArray(main, ele) {
         project.Task.forEach((obj) => {
           if (obj.Title === ele) {
             project.Task.splice(project.Task.indexOf(obj), 1);
+            localStorage.clear()
             localStorage.setItem("project", JSON.stringify(projectList));
           }
         });

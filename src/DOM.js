@@ -24,8 +24,8 @@ function formBtnHandler(e) {
       dialog.returnValue = Name.value;
       dialog.close();
       form.reset();
-      console.log('todolist before delete function', todoList)
-      console.log(('projectlist before delete function',projectList))
+      console.log("todolist before delete function", todoList);
+      console.log(("projectlist before delete function", projectList));
     }
   }
 }
@@ -79,6 +79,7 @@ function addToContainer(dialog) {
   doneBtn.classList.add("doneBtn");
   delBtn.classList.add("delBtn");
   btnContainer.append(doneBtn, delBtn);
+  btnContainer.classList.add('btnContainer')
   del(delBtn);
   div.append(p);
   if (dialog.returnValue !== "cancel") {
@@ -109,7 +110,7 @@ function template(objlist, title) {
   const btnContainer = document.createElement("div");
   const doneBtn = document.createElement("button");
   const delBtn = document.createElement("button");
-  btnContainer.classList.add("cardBtnContainer");
+  btnContainer.classList.add("btnContainer");
   btnContainer.append(doneBtn, delBtn);
   doneBtn.textContent = "Done";
   delBtn.textContent = "Delete";
@@ -151,6 +152,7 @@ function Home() {
             doneBtn.classList.add("doneBtn");
             delBtn.classList.add("delBtn");
             btnContainer.append(doneBtn, delBtn);
+            btnContainer.classList.add('btnContainer')
             card.classList.add("homeCard");
             del(delBtn);
             for (const [key, value] of Object.entries(val)) {
@@ -182,6 +184,7 @@ function projectDisplay(objlist, title) {
           const btnContainer = document.createElement("div");
           const doneBtn = document.createElement("button");
           const delBtn = document.createElement("button");
+          btnContainer.classList.add('btnContainer')
           doneBtn.textContent = "Done";
           delBtn.textContent = "Delete";
           doneBtn.classList.add("doneBtn");
@@ -239,12 +242,61 @@ function addToContent(e) {
 function del(button) {
   button.addEventListener("click", (e) => {
     const container = e.target.closest("div").parentNode;
-    const obj = container.querySelector("p").textContent
+    const obj = container.querySelector("p").textContent;
     container.remove();
-    delFromlocalStorageAndMainArray(container.className, obj)
+    delFromlocalStorageAndMainArray(container.className, obj);
   });
 }
 
+function atStart() {
+  addHome();
+  Home();
+  const taskContainer = document.querySelector(".Todo-list");
+  const projectContainer = document.querySelector(".Project-list");
+  const todoList = JSON.parse(localStorage.getItem("todo"));
+  const projectList = JSON.parse(localStorage.getItem("project"));
+  const div = document.createElement("div");
+  const p = document.createElement("p");
+  const btnContainer = document.createElement("div");
+  const doneBtn = document.createElement("button");
+  const delBtn = document.createElement("button");
+  doneBtn.textContent = "Done";
+  delBtn.textContent = "Delete";
+  doneBtn.classList.add("doneBtn");
+  delBtn.classList.add("delBtn");
+  btnContainer.append(doneBtn, delBtn);
+  del(delBtn);
+  if (todoList.length !== 0) {
+    const div = document.createElement("div");
+    const p = document.createElement("p");
+    const btnContainer = document.createElement("div");
+    const doneBtn = document.createElement("button");
+    const delBtn = document.createElement("button");
+    doneBtn.textContent = "Done";
+    delBtn.textContent = "Delete";
+    doneBtn.classList.add("doneBtn");
+    delBtn.classList.add("delBtn");
+    btnContainer.append(doneBtn, delBtn);
+    del(delBtn);
+    todoList.forEach((task) => {
+      p.textContent = task.Title;
+      div.append(p);
+      div.append(btnContainer);
+      div.classList.add("task");
+    });
+    taskContainer.append(div);
+  }
+
+  projectList.forEach((project) => {
+    if (project.Title !== "Home") {
+      p.textContent = project.Title;
+      div.append(p);
+      div.append(btnContainer);
+      div.classList.add("project");
+    }
+  });
+  projectContainer.append(div);
+}
 // *********************************************DOM manipulation*********************************************
 
 const container = document.querySelector(".content");
@@ -281,5 +333,6 @@ myDialog.forEach((dialog) =>
 );
 
 addHome();
-Home();
-// addHome();
+Home()
+
+// atStart();
